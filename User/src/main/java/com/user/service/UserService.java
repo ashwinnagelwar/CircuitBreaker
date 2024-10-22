@@ -16,7 +16,7 @@ public class UserService {
 	  @Autowired
 	    private RestTemplate restTemplate;
 
-	    @CircuitBreaker(name = "userService", fallbackMethod = "fallbackGetUserDetails")
+	    //@CircuitBreaker(name = "userService", fallbackMethod = "fallbackGetUserDetails")
 	    @Retry(name = "userService", fallbackMethod = "fallbackGetUserDetails")
 	    public User getUserDetails() {
 	        Address address = restTemplate.getForObject("http://localhost:8081/address/getAddress", Address.class);
