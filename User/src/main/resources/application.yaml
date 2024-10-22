@@ -11,12 +11,17 @@ resilience4j:
         permittedNumberOfCallsInHalfOpenState: 3
         failureRateThreshold: 50
         automaticTransitionFromOpenToHalfOpenEnabled: true
-
+        recordExceptions:
+          - org.springframework.web.client.ResourceAccessException   # Add this
+          - java.net.ConnectException                                # Add this
+          - java.net.SocketTimeoutException                          # Add this
+        ignoreExceptions:
+          - org.springframework.web.client.HttpClientErrorException 
   retry:
     instances:
       userService:
         maxAttempts: 3
-        waitDuration: 500ms    
+        waitDuration: 5s    
       
 management:
   health:
