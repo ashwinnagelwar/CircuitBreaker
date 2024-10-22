@@ -1,0 +1,35 @@
+resilience4j:
+  circuitbreaker:
+    instances:
+      userService:  # Make sure this matches the name used in the annotation
+        registerHealthIndicator: true
+        event-consumer-buffer-size: 10
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        waitDurationInOpenState: 10000ms
+        permittedNumberOfCallsInHalfOpenState: 3
+        failureRateThreshold: 50
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+
+  retry:
+    instances:
+      userService:
+        maxAttempts: 3
+        waitDuration: 500ms    
+      
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health                 # Exposes the health endpoint
+                    # Exposes the logger settings
+  endpoint:
+    health:
+      show-details: always          # Show full details of health checks
+                  # Enables circuit breaker health check (from Resilience4j)
+
+
